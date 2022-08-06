@@ -81,13 +81,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    iCLOP
                 </div>
 
                 <div class="links">
-                    <a href="{{route('layout')}}">Dosen</a>
-                    <a href="{{route('layout')}}">Layout</a>
-                    <a href="{{route('student')}}">Mahasiswa</a>
+                    <a href="#">DDL</a>
                 </div>
             </div>
         </div>
