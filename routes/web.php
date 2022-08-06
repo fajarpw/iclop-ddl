@@ -9,5 +9,5 @@ Route::get('/layout', function () {
 })->name('layout');
 
 Route::get('/student', function () {
-    return view('student.index');
+    return view('student.dashboard');
 })->name('student');

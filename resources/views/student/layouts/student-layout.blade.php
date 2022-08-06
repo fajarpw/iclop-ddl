@@ -28,10 +28,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-dark">
             <div class="container">
-                <a href="../../index3.html" class="navbar-brand">
-                    <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+                <a href="/" class="navbar-brand">
+                    <img src="../../dist/img/AdminLTELogo.png" alt="iCLOP Logo"
                         class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light">AdminLTE 3</span>
+                    <span class="brand-text font-weight-light">iCLOP</span>
                 </a>
 
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse"
@@ -44,7 +44,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="index3.html" class="nav-link">Beranda</a>
+                            <a href="/student" class="nav-link">Beranda</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">Pembelajaran</a>
@@ -81,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1 class="m-0"> Top Navigation <small>Example 3.0</small></h1>
+                            <h1 class="m-0"> Halaman <small>Mahasiswa</small></h1>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -92,6 +92,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="content">
                 <div class="container">
                     @yield('content')
+
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content -->
@@ -135,9 +136,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset('plugins/jquery-mapael/maps/usa_states.min.js')}}"></script>
     <!-- ChartJS -->
     <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
-
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{asset('dist/js/demo.js')}}"></script>
 
 </body>
 
