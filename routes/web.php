@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\ValidatorController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -21,5 +22,10 @@ Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], func
 });
 
 Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], function () {
-    Route::get('dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
+    Route::get('beranda', [StudentController::class, 'dashboard'])->name('student.dashboard');
+    Route::get('latihan', [StudentController::class, 'exercise'])->name('student.exercise');
+    Route::get('latihan/{id}', [StudentController::class, 'exercise_question'])->name('student.exercise.question');
+    Route::get('latihan/q/{id}', [StudentController::class, 'exercise_question_detail'])->name('student.exercise.question.detail');
+    Route::post('runtest', [ValidatorController::class, 'runtest'])->name('student.runtest');
+    Route::post('submittest', [ValidatorController::class, 'submittest'])->name('student.submittest');
 });

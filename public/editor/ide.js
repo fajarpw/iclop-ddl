@@ -13,11 +13,11 @@ window.onload = function () {
     });
 
     // Prevent Copy/Paste (CTRL+C/CRTL+V)
-    editor.commands.addCommand({
-        name: "breakTheEditor",
-        bindKey: "ctrl-c|ctrl-v|ctrl-x|ctrl-shift-v|shift-del|cmd-c|cmd-v|cmd-x|mousedown",
-        exec: function() {}
-    });
+    // editor.commands.addCommand({
+    //     name: "breakTheEditor",
+    //     bindKey: "ctrl-c|ctrl-v|ctrl-x|ctrl-shift-v|shift-del|cmd-c|cmd-v|cmd-x|mousedown",
+    //     exec: function() {}
+    // });
 
     // Prevent Right Click On Editor
     editor.container.addEventListener("contextmenu", function(e) {

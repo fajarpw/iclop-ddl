@@ -31,7 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <nav class="main-header navbar navbar-expand-md navbar-dark">
             <div class="container">
                 <a href="/" class="navbar-brand">
-                    <img src="../../dist/img/AdminLTELogo.png" alt="iCLOP Logo"
+                    <img src="/dist/img/AdminLTELogo.png" alt=""
                         class="brand-image img-circle elevation-3" style="opacity: .8">
                     <span class="brand-text font-weight-light">iCLOP</span>
                 </a>
@@ -46,13 +46,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="/student" class="nav-link">Beranda</a>
+                            <a href="{{route('student.dashboard')}}" class="nav-link">Beranda</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" class="nav-link dropdown-toggle">Pembelajaran</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="#" class="dropdown-item">Materi & Latihan</a></li>
+                                <li><a href="{{route('student.exercise')}}" class="dropdown-item">Materi & Latihan</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -72,7 +73,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <li class="nav-item dropdown">
                         <a class="nav-link" data-toggle="dropdown" href="#">
                             <i class="far fa-user-circle"></i>
-                            Nama User
+                            {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                             <div class="dropdown-divider"></div>
@@ -93,22 +94,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            {{-- <div class="content-header">
+            <div class="content-header">
                 <div class="container">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0"> Halaman <small>Mahasiswa</small></h1>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="callout callout-warning">
+                                @yield('content-header')
+                            </div>
                         </div><!-- /.col -->
                     </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
-            </div> --}}
+            </div>
             <!-- /.content-header -->
 
             <!-- Main content -->
             <div class="content">
                 <div class="container">
                     @yield('content')
-
                 </div><!-- /.container-fluid -->
             </div>
             <!-- /.content -->
@@ -124,8 +126,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Main Footer -->
         <footer class="main-footer">
             <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
-                Anything you want
+            <div class="float-right d-none d-sm-inline" id="timestamp">
+                {{-- Jam --}}
             </div>
             <!-- Default to the left -->
             <strong>Copyright &copy; 2022 <a href="/student">iCLOP</a>.</strong> All rights
@@ -144,15 +146,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.js')}}"></script>
 
-    <!-- PAGE PLUGINS -->
-    <!-- jQuery Mapael -->
-    <script src="{{asset('plugins/jquery-mousewheel/jquery.mousewheel.js')}}"></script>
-    <script src="{{asset('plugins/raphael/raphael.min.js')}}"></script>
-    <script src="{{asset('plugins/jquery-mapael/jquery.mapael.min.js')}}"></script>
-    <script src="{{asset('plugins/jquery-mapael/maps/usa_states.min.js')}}"></script>
     <!-- ChartJS -->
     <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
 
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+
+    <script>
+        function showTime() {
+        var date = new Date(),
+        utc = new Date(Date.UTC(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          date.getHours(),
+          date.getMinutes(),
+          date.getSeconds()
+        ));
+
+        document.getElementById('timestamp').innerHTML = date.toLocaleTimeString('id-ID');
+    }
+
+     setInterval(showTime, 1000);
+    </script>
+    @yield('script')
 </body>
 
 </html>

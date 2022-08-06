@@ -1,6 +1,6 @@
 @extends('student.layouts.student-layout')
 @section('content')
-<div class="row mt-3">
+<div class="row">
     <div class="col-md-6">
         <embed src="{{Storage::disk('local')->url('/ddl_guidance/Master.pdf')}}" type="application/pdf"
             style="width: 100%; height: 500px;">
@@ -9,11 +9,11 @@
         <div class="editor" id="editor" style="height: 200px;"></div>
         <div class="row mt-3">
             <div class="col-3">
-                <button class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom" title="Run"><i
+                <button class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom" title="Sebelumnya"><i
                         class="fa fa-angle-left"></i></button>
             </div>
             <div class="col-3">
-                <button class="btn btn-primary w-100" data-toggle="tooltip" data-placement="bottom" title="Run"><i
+                <button class="btn btn-primary w-100" data-toggle="tooltip" data-placement="bottom" title="Selanjutnya"><i
                         class="fa fa-angle-right"></i></button>
             </div>
             <div class="col-3">
