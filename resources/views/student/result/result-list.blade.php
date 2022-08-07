@@ -1,4 +1,7 @@
 @extends('student.layouts.student-layout')
+@section('title')
+iCLOP | Riwayat
+@endsection
 @section('content-header')
 <h4 style="font-weight: bold">Daftar Nilai</h4>
 <p>Anda dapat melihat nilai dari Tugas dan Ujian yang telah Anda lakukan.</p>

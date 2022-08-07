@@ -54,8 +54,15 @@ class StudentController extends Controller
 
     public function exercise_question_detail(Request $request)
     {
-        $questions = Question::where('id', '=', $request->id)->get();
+        //$questions = Question::where('id', '=', $request->id)->get();
+        $questions = DB::table('questions')
+        ->where('questions.id', '=', $request->question_id)
+        ->join('exercise_questions', 'questions.id', 'exercise_questions.id')
+        ->where('exercise_questions.exercise_id', '=', $request->exercise_id)
+        ->select('questions.id','questions.title', 'questions.topic','questions.dbname','questions.description','questions.required_table','questions.test_code','questions.guide','questions.no', 'exercise_questions.exercise_id')
+        ->get();
         $question_count = count($questions);
+        // dd($question_count);
         return view('student.question', compact('questions', 'question_count'));
     }
 

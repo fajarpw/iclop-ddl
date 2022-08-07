@@ -26,7 +26,7 @@ Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], func
 
     Route::get('latihan', [StudentController::class, 'exercise'])->name('student.exercise');
     Route::get('latihan/{id}', [StudentController::class, 'exercise_question'])->name('student.exercise.question');
-    Route::get('latihan/q/{id}', [StudentController::class, 'exercise_question_detail'])->name('student.exercise.question.detail');
+    Route::get('latihan/{exercise_id}/{question_id}', [StudentController::class, 'exercise_question_detail'])->name('student.exercise.question.detail');
     
     Route::post('runtest', [ValidatorController::class, 'runtest'])->name('student.runtest');
     Route::post('submittest', [ValidatorController::class, 'submittest'])->name('student.submittest');

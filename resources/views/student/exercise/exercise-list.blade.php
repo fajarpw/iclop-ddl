@@ -1,4 +1,7 @@
 @extends('student.layouts.student-layout')
+@section('title')
+iCLOP | Latihan
+@endsection
 @section('content-header')
 <h4 style="font-weight: bold">Daftar Latihan</h4>
 <p>Anda dapat mengerjakan latihan di bawah ini sebelum melakukan penilian.</p>

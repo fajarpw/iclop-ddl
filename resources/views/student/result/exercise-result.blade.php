@@ -1,4 +1,7 @@
 @extends('student.layouts.student-layout')
+@section('title')
+iCLOP | Riwayat Latihan
+@endsection
 @section('content-header')
 <h5 class="font-weight-bold">Riwayat</h5>
 <p>Pembelajaran yang Anda lakukan dapat diulang-ulang.

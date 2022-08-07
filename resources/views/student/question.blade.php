@@ -1,4 +1,7 @@
 @extends('student.layouts.student-layout')
+@section('title')
+iCLOP | DDL
+@endsection
 @section('content-header')
 <h5 class="font-weight-bold">{{$questions[0] -> {'title'} }}</h5>
 @endsection
@@ -13,26 +16,26 @@
     <div class="col-md-6">
         <div class="editor" id="editor" style="height: 200px;"></div>
         <div class="row mt-3">
-            @if ($question -> {'id'} <= 1) <div class="col-3">
+            @if ($question -> {'no'} <= 1) <div class="col-3">
                 <button class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom" title="Sebelumnya"
                     disabled><i class="fa fa-angle-left"></i></button>
         </div>
         @else
         <div class="col-3">
-            <button class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom" title="Sebelumnya"
-                onclick="window.location.href='/m/latihan/q/{{ $question -> {'id'} - 1}}'"><i
+            <button id="prevBtn" class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom"
+                title="Sebelumnya" onclick="window.location.href='/m/latihan/q/{{ $question -> {'no'} - 1}}'"><i
                     class="fa fa-angle-left"></i></button>
         </div>
         @endif
-        @if ($question -> {'id'} > $question_count)
+        @if ($question -> {'no'} >= $question_count)
         <div class="col-3">
-            <button class="btn btn-primary w-100" data-toggle="tooltip" data-placement="bottom" title="Selanjutnya"
-                disabled><i class="fa fa-angle-right"></i></button>
+            <button id="nextBtn" class="btn btn-primary w-100" data-toggle="tooltip" data-placement="bottom"
+                title="Selanjutnya" disabled><i class="fa fa-angle-right"></i></button>
         </div>
         @else
         <div class="col-3">
             <button class="btn btn-primary w-100" data-toggle="tooltip" data-placement="bottom" title="Selanjutnya"
-                onclick="window.location.href='/m/latihan/q/{{ $question -> {'id'} + 1}}'"><i
+                onclick="window.location.href='/m/latihan/{{ $question -> {'exercise_id'} }}/{{ $question -> {'no'} + 1}}'"><i
                     class="fa fa-angle-right"></i></button>
         </div>
         @endif
@@ -142,6 +145,7 @@
             const output = document.getElementById("output-text");
             output.remove();
         });
+
     });
 </script>
 @endsection
