@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 
 <head>
@@ -22,6 +18,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+    <!-- Sweetalert2 -->
+    <link rel="stylesheet" href="{{asset('sweetalert2/sweetalert2.min.css')}}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{asset('toastr/toastr.min.css')}}">
 </head>
 
 <body class="hold-transition layout-top-nav dark-mode">
@@ -31,8 +31,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <nav class="main-header navbar navbar-expand-md navbar-dark">
             <div class="container">
                 <a href="/" class="navbar-brand">
-                    <img src="/dist/img/AdminLTELogo.png" alt=""
-                        class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <img src="/dist/img/AdminLTELogo.png" alt="" class="brand-image img-circle elevation-3"
+                        style="opacity: .8">
                     <span class="brand-text font-weight-light">iCLOP</span>
                 </a>
 
@@ -76,7 +76,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out mr-2"></i> Logout
@@ -145,11 +144,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('dist/js/adminlte.js')}}"></script>
-
     <!-- ChartJS -->
     <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
-
+    <!-- Sweetalert2 -->
+    <script src="{{asset('sweetalert2/sweetalert2.min.js')}}"></script>
+    <!-- Toastr -->
+    <script src="{{asset('toastr/toastr.min.js')}}"></script>
+    <script src="{{asset('toastr/toastr.min.js')}}"></script>
     <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -174,6 +194,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
      setInterval(showTime, 1000);
     </script>
+
     @yield('script')
 </body>
 

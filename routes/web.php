@@ -28,4 +28,5 @@ Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], func
     Route::get('latihan/q/{id}', [StudentController::class, 'exercise_question_detail'])->name('student.exercise.question.detail');
     Route::post('runtest', [ValidatorController::class, 'runtest'])->name('student.runtest');
     Route::post('submittest', [ValidatorController::class, 'submittest'])->name('student.submittest');
+    Route::post('enroll', [StudentController::class, 'enroll'])->name('student.enroll.class');
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Question;
+use App\Submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -80,7 +81,6 @@ class ValidatorController extends Controller
                 $result .= "<div class='alert alert-warning'>";
                 $result .= "<i class='fas fa-exclamation-triangle'></i> " .  $row['runtests'];
                 $result .= "</div>";
-                
             } else {
                 $this->isAllowSubmit = true;
                 $result .= "<div class='alert alert-success'>";
@@ -103,14 +103,14 @@ class ValidatorController extends Controller
 
         if (strcmp($test[0]->topic, "CREATE Database") == 0) {
             if (strcasecmp($request->code, "create database my_playlist;") == 0) {
-                $finalResult = "<div id='output-text'>";
-                $finalResult .= "<div style='color: green; background-color:rgba(0, 255, 0, 0.2);'>";
+                $finalResult = "<div id='output-text' class='w-100'>";
+                $finalResult .= "<div class='alert alert-success'>";
                 $finalResult .= "<i class='fas fa-check'> </i> " . "Membuat database my_playlist";
                 $finalResult .= "</div>";
                 $finalResult .= "</div>";
             } else {
-                $finalResult = "<div id='output-text'>";
-                $finalResult .= "<div style='color: red; background-color:rgba(255, 0, 0, 0.15);'>";
+                $finalResult = "<div id='output-text' class='w-100'>";
+                $finalResult .= "<div class='alert alert-danger'>";
                 $finalResult .= "<i class='fas fa-times'> </i> " . "Membuat database my_playlist";
                 $finalResult .= "</div>";
                 $finalResult .= "</div>";
@@ -120,14 +120,14 @@ class ValidatorController extends Controller
             return response()->json(['result' => $finalResult]);
         } else if (strcmp($test[0]->topic, "DROP Database") == 0) {
             if (strcasecmp($request->code, "DROP DATABASE my_playlists;") == 0) {
-                $finalResult = "<div id='output-text'>";
-                $finalResult .= "<div style='color: green; background-color:rgba(0, 255, 0, 0.2);'>";
+                $finalResult = "<div id='output-text' class='w-100'>";
+                $finalResult .= "<div class='alert alert-success'>";
                 $finalResult .= "<i class='fas fa-check'> </i> " . "Menghapus database my_playlist";
                 $finalResult .= "</div>";
                 $finalResult .= "</div>";
             } else {
-                $finalResult = "<div id='output-text'>";
-                $finalResult .= "<div style='color: red; background-color:rgba(255, 0, 0, 0.15);'>";
+                $finalResult = "<div id='output-text' class='w-100'>";
+                $finalResult .= "<div class='alert alert-danger'>";
                 $finalResult .= "<i class='fas fa-times'> </i> " . "Menghapus database my_playlist";
                 $finalResult .= "</div>";
                 $finalResult .= "</div>";
@@ -180,6 +180,222 @@ class ValidatorController extends Controller
 
             //Display test result
             return response()->json(['result' => $finalResult]);
+        }
+    }
+
+    public function submitTest(Request $request)
+    {
+        //Get task data
+        $test = Question::where('id', '=',  $request->task_id)->get();
+        $this->test_code = $test[0]->test_code;
+        $this->topic = $test[0]->topic;
+        $this->dbname = $test[0]->dbname . Auth::user()->id;
+
+        //Get Connection 1
+        if (strcmp($test[0]->topic, "CREATE Database") == 0) {
+
+            if (strcasecmp($request->code, "create database my_playlist;") == 0) {
+                $this->isAllowSubmit = true;
+                $finalResult = "<div id='output-text' class='w-100'>";
+                $finalResult .= "<div class='alert alert-success'>";
+                $finalResult .= "<i class='fas fa-check'> </i> " . "Membuat database my_playlist";
+                $finalResult .= "</div>";
+                $finalResult .= "</div>";
+            } else {
+                $this->isAllowSubmit = false;
+                $finalResult = "<div id='output-text' class='w-100'>";
+                $finalResult .= "<div class='alert alert-danger'>";
+                $finalResult .= "<i class='fas fa-times'> </i> " . "Membuat database my_playlist";
+                $finalResult .= "</div>";
+                $finalResult .= "</div>";
+            }
+
+            if ($this->isAllowSubmit == true) {
+
+                $result = Submission::updateOrCreate(
+                    ['user_id' => $request->user_id, 'task_id' => $request->task_id],
+                    ['status' => 'Passed', 'solution' => $request->code]
+                );
+
+                if (!$result) {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'passed',
+                        'message' => 'GAGAL menyimpan jawaban!',
+                    ]);
+                } else {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'passed',
+                        'message' => 'BERHASIL menyimpan jawaban!',
+                    ]);
+                }
+            } else {
+
+                $result = Submission::updateOrCreate(
+                    ['user_id' => $request->user_id, 'task_id' => $request->task_id],
+                    ['status' => 'Failed', 'solution' => $request->code]
+                );
+
+                if (!$result) {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'failed',
+                        'message' => 'GAGAL menyimpan jawaban!',
+                    ]);
+                } else {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'failed',
+                        'message' => 'Masih terdapat kesalahan! Silahkan perbaiki terlebih dahulu jawaban Anda!',
+                    ]);
+                }
+            }
+        } else if (strcmp($test[0]->topic, "DROP Database") == 0) {
+            if (strcasecmp($request->code, "DROP DATABASE my_playlists;") == 0) {
+                $this->isAllowSubmit = true;
+                $finalResult = "<div id='output-text' class='w-100'>";
+                $finalResult .= "<div class='alert alert-success'>";
+                $finalResult .= "<i class='fas fa-check'> </i> " . "Menghapus database my_playlist";
+                $finalResult .= "</div>";
+                $finalResult .= "</div>";
+            } else {
+                $this->isAllowSubmit = false;
+                $finalResult = "<div id='output-text' class='w-100'>";
+                $finalResult .= "<div class='alert alert-danger'>";
+                $finalResult .= "<i class='fas fa-times'> </i> " . "Menghapus database my_playlist";
+                $finalResult .= "</div>";
+                $finalResult .= "</div>";
+            }
+
+            if ($this->isAllowSubmit == true) {
+
+                $result = Submission::updateOrCreate(
+                    ['student_id' => $request->user_id, 'question_id' => $request->task_id],
+                    ['status' => 'Passed', 'solution' => $request->code]
+                );
+
+                if (!$result) {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'passed',
+                        'message' => 'GAGAL menyimpan jawaban!',
+                    ]);
+                } else {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'passed',
+                        'message' => 'BERHASIL menyimpan jawaban!',
+                    ]);
+                }
+            } else {
+
+                $result = Submission::updateOrCreate(
+                    ['student_id' => $request->user_id, 'question_id' => $request->task_id],
+                    ['status' => 'Failed', 'solution' => $request->code]
+                );
+
+                if (!$result) {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'failed',
+                        'message' => 'GAGAL menyimpan jawaban!',
+                    ]);
+                } else {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'failed',
+                        'message' => 'Masih terdapat kesalahan! Silahkan perbaiki terlebih dahulu jawaban Anda!',
+                    ]);
+                }
+            }
+
+            //Display test result
+            return response()->json(['result' => $finalResult]);
+        } else {
+            //Get Connection 1
+            try {
+                $pg_connection = $this->connectToDatabase('postgres');
+                pg_query($pg_connection, "DROP DATABASE IF EXISTS " . $this->dbname . ";");
+                pg_query($pg_connection, "create database " . $this->dbname . ";");
+            } catch (\Exception $e) {
+                return response()->json(['result' =>  $this->displayError($e->getMessage())]);
+            }
+
+            //Get Connection 2
+            try {
+                $mhs_connection = $this->connectToDatabase($this->dbname);
+            } catch (\Exception $e) {
+                return response()->json(['result' =>  $this->displayError($e->getMessage())]);
+            }
+
+            //Execute Code
+            $mycode = "BEGIN;";
+            $mycode = $test[0]->required_table;
+            $mycode .= $request->code;
+            try {
+                $this->executeCode($mhs_connection, $mycode, $this->topic, $this->dbname);
+            } catch (\Exception $e) {
+                return response()->json(['result' =>  $this->displayError($e->getMessage())]);
+            }
+
+            //Execute Test
+            try {
+                //$this->executeTest($mhs_connection, $this->test_code);
+                $finalResult = $this->displayTestResult($this->executeTest($mhs_connection, $this->test_code));
+            } catch (\Exception $e) {
+                return response()->json(['result' =>  $this->displayError($e->getMessage())]);
+            }
+
+            //Close Connection
+            try {
+                pg_query($mhs_connection, 'ROLLBACK;');
+                $this->disconnectFromDatabase($mhs_connection);
+                pg_query($pg_connection, "DROP DATABASE IF EXISTS " . $this->dbname);
+            } catch (\Exception $e) {
+                return response()->json(['result' => $e->getMessage()]);
+            }
+
+            if ($this->isAllowSubmit == true) {
+
+                $result = Submission::updateOrCreate(
+                    ['student_id' => $request->user_id, 'question_id' => $request->task_id],
+                    ['status' => 'Passed', 'solution' => $request->code]
+                );
+
+                if (!$result) {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'passed',
+                        'message' => 'GAGAL menyimpan jawaban!',
+                    ]);
+                } else {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'passed',
+                        'message' => 'BERHASIL menyimpan jawaban!',
+                    ]);
+                }
+            } else {
+                $result = Submission::updateOrCreate(
+                    ['student_id' => $request->user_id, 'question_id' => $request->task_id],
+                    ['status' => 'Failed', 'solution' => $request->code]
+                );
+
+                if (!$result) {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'failed',
+                        'message' => 'GAGAL menyimpan jawaban!',
+                    ]);
+                } else {
+                    return response()->json([
+                        'result' => $finalResult,
+                        'status' => 'failed',
+                        'message' => 'Masih terdapat kesalahan! Silahkan perbaiki terlebih dahulu jawaban Anda!',
+                    ]);
+                }
+            }
         }
     }
 }

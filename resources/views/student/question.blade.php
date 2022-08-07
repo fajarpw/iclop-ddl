@@ -1,4 +1,7 @@
 @extends('student.layouts.student-layout')
+@section('content-header')
+<h5 class="font-weight-bold">{{$questions[0] -> {'title'} }}</h5>
+@endsection
 @section('content')
 <div class="row">
     @forelse ($questions as $question)
@@ -6,38 +9,50 @@
         <embed src="{{Storage::disk('local')->url('/ddl_guidance/'.$question->guide)}}" type="application/pdf"
             style="width: 100%; height: 500px;">
     </div>
-    {{-- <div class="alert alert-danger">
-        <h5><i class="icon fas fa-ban"></i> Failed!</h5>
-        asdds
-    </div> --}}
+
     <div class="col-md-6">
         <div class="editor" id="editor" style="height: 200px;"></div>
         <div class="row mt-3">
-            <div class="col-3">
-                <button class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom"
-                    title="Sebelumnya"><i class="fa fa-angle-left"></i></button>
-            </div>
-            <div class="col-3">
-                <button class="btn btn-primary w-100" data-toggle="tooltip" data-placement="bottom"
-                    title="Selanjutnya"><i class="fa fa-angle-right"></i></button>
-            </div>
-            <div class="col-3">
-                <button id="runButton" class="btn btn-success w-100" data-toggle="tooltip" data-placement="bottom"
-                    title="Run"><i class="fa fa-play"></i></button>
-            </div>
-            <div class="col-3">
-                <button id="submitButton" class="btn btn-outline-warning w-100" data-toggle="tooltip"
-                    data-placement="bottom" title="Submit"><i class="fa fa-check-double"></i></button>
-            </div>
+            @if ($question -> {'id'} <= 1) <div class="col-3">
+                <button class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom" title="Sebelumnya"
+                    disabled><i class="fa fa-angle-left"></i></button>
         </div>
-        <div id="output" class="row mt-3"></div>
+        @else
+        <div class="col-3">
+            <button class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom" title="Sebelumnya"
+                onclick="window.location.href='/m/latihan/q/{{ $question -> {'id'} - 1}}'"><i
+                    class="fa fa-angle-left"></i></button>
+        </div>
+        @endif
+        @if ($question -> {'id'} > $question_count)
+        <div class="col-3">
+            <button class="btn btn-primary w-100" data-toggle="tooltip" data-placement="bottom" title="Selanjutnya"
+                disabled><i class="fa fa-angle-right"></i></button>
+        </div>
+        @else
+        <div class="col-3">
+            <button class="btn btn-primary w-100" data-toggle="tooltip" data-placement="bottom" title="Selanjutnya"
+                onclick="window.location.href='/m/latihan/q/{{ $question -> {'id'} + 1}}'"><i
+                    class="fa fa-angle-right"></i></button>
+        </div>
+        @endif
+        <div class="col-3">
+            <button id="runButton" class="btn btn-success w-100" data-toggle="tooltip" data-placement="bottom"
+                title="Run"><i class="fa fa-play"></i></button>
+        </div>
+        <div class="col-3">
+            <button id="submitButton" class="btn btn-outline-warning w-100" data-toggle="tooltip"
+                data-placement="bottom" title="Submit"><i class="fa fa-check-double"></i></button>
+        </div>
     </div>
-    @empty
-    <div class="alert alert-warning alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h5><i class="icon fas fa-exclamation-triangle"></i> Tidak ada data pembelajaran!</h5>
-    </div>
-    @endforelse
+    <div id="output" class="row mt-3"></div>
+</div>
+@empty
+<div class="alert alert-warning alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+    <h5><i class="icon fas fa-exclamation-triangle"></i> Tidak ada data pembelajaran!</h5>
+</div>
+@endforelse
 </div>
 
 <script src="{{ asset('editor/ide.js') }} "></script>
@@ -62,8 +77,6 @@
                 $("#submitButton").attr("disabled", true);
                 $("#submitButton").html("<i class='fas fa-ban'></i> Submit");
                 $.ajax({
-                    // url: "{{asset('php/TEST1.php')}}",
-                    //url: "{{asset('php/test/test1.php')}}",
                     url: "{{route('student.runtest')}}",
                     method: "POST",
                     data: {
@@ -90,6 +103,43 @@
             }
         });
     
+        $('#submitButton').click(function(){
+            $("#submitButton").attr("disabled", true);
+            $("#submitButton").html("<i class='fas fa-spinner'></i> Processing");
+            $("#runButton").attr("disabled", true);
+            $("#runButton").html("<i class='fas fa-ban'></i> Run");
+            $.ajax({
+                url: "{{route('student.submittest')}}",
+                method: "POST",
+                data: {
+                    code: editor.getSession().getValue(),
+                    task_id: "{{$questions[0] -> id}}",
+                    user_id: "{{Auth::user()->id}}"
+                },
+                success: function(response){
+                    $("#output").html(response.result);
+                    $("#submitButton").attr("disabled", false)
+                    $("#submitButton").html("<i class='fas fa-check'></i> Submit");
+                    $("#runButton").attr("disabled", false);
+                    $("#runButton").html("<i class='fas fa-play'></i> Run");
+                    if(response.status == 'passed'){
+                        toastr.success(response.message);
+                    }else{
+                        toastr.warning(response.message);
+                    }
+                    
+                        
+                },
+                error: function(){
+                    $("#output").html("Something went wrong!");
+                    $("#submitButton").attr("disabled", false)
+                    $("#submitButton").html("<i class='fas fa-check'></i> Submit");
+                    $("#runButton").attr("disabled", false);
+                    $("#runButton").html("<i class='fas fa-play'></i> Run");
+                }
+            }); 
+        });
+
         $('#clearResult').click(function(){
             const output = document.getElementById("output-text");
             output.remove();

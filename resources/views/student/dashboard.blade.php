@@ -1,51 +1,58 @@
 @extends('student.layouts.student-layout')
+@section('content-header')
+<h5 class="font-weght-bold">Beranda</h5>
+@endsection
 @section('content')
 <div class="row">
-    <div class="col-md-6">
-        <embed src="{{Storage::disk('local')->url('/ddl_guidance/Master.pdf')}}" type="application/pdf"
-            style="width: 100%; height: 500px;">
-    </div>
-    <div class="col-md-6">
-        <div class="editor" id="editor" style="height: 200px;"></div>
-        <div class="row mt-3">
-            <div class="col-3">
-                <button class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom" title="Sebelumnya"><i
-                        class="fa fa-angle-left"></i></button>
+    @forelse ($classes as $class)
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-dark">
+            <div class="inner font-weight-bold">
+                <h3>{{$class -> {'name'} }}</h3>
+                <p>{{$class -> teacher['name'] }}</p>
             </div>
-            <div class="col-3">
-                <button class="btn btn-primary w-100" data-toggle="tooltip" data-placement="bottom" title="Selanjutnya"><i
-                        class="fa fa-angle-right"></i></button>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
             </div>
-            <div class="col-3">
-                <button class="btn btn-success w-100" data-toggle="tooltip" data-placement="bottom" title="Run"><i
-                        class="fa fa-play"></i></button>
-            </div>
-            <div class="col-3">
-                <button class="btn btn-outline-warning w-100" data-toggle="tooltip" data-placement="bottom"
-                    title="Submit"><i class="fa fa-check-double"></i></button>
-            </div>
-        </div>
-        <div class="row mt-3 border border-warning">
-            Output
+            <a href="{{route('student.enroll.class')}}" class="small-box-footer">Daftar <i
+                    class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
+    @empty
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fas fa-exclamation-triangle"></i> Tidak ada data pembelajaran!</h5>
+    </div>
+    @endforelse
 </div>
-
-{{-- <div class="row border border-warning mt-3">
-    <div class="col-12">
-        Output
-    </div> --}}
-</div>
-
-<script src="{{ asset('editor/ide.js') }} "></script>
-<script src="{{ asset('editor/ace-editor/ace.js') }} "></script>
-<script src="{{ asset('editor/ace-editor/mode-pgsql.js') }} "></script>
-<script src="{{ asset('editor/ace-editor/theme-monokai.js') }} "></script>
-<script src="{{ asset('editor/ace-editor/ext-language_tools.js') }}"></script>
-<script>
-    var langTools = ace.require("ace/ext/language_tools");
-</script>
 @endsection
-@section('script')
 
+@section('script')
+<script>
+    $(document).ready(function(){
+        $('#enroll-form').on('submit', function(e){
+            e.preventDefault();
+            var form = this;
+                $.ajax({
+                url: $(form).attr('action'),
+                method: $(form).attr('method'),
+                data: new FormData(form),
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+                success: function (data) {
+                    if (data.code == 0) {
+                        $.each(data.error, function (prefix, val) {
+                            $(form).find('span.' + prefix + '_error').text(val[0]);
+                        });
+                    } else {
+                        // $(form)[0].reset();
+                        // toastr.success(data.msg);
+                        alert(data.msg);
+                    }
+                }
+        });
+    });
+});
+</script>
 @endsection

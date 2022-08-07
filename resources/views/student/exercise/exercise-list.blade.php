@@ -24,16 +24,4 @@
     </div>
     @endforelse
 </div>
-
-<script src="{{ asset('editor/ide.js') }} "></script>
-<script src="{{ asset('editor/ace-editor/ace.js') }} "></script>
-<script src="{{ asset('editor/ace-editor/mode-pgsql.js') }} "></script>
-<script src="{{ asset('editor/ace-editor/theme-monokai.js') }} "></script>
-<script src="{{ asset('editor/ace-editor/ext-language_tools.js') }}"></script>
-<script>
-    var langTools = ace.require("ace/ext/language_tools");
-</script>
-@endsection
-@section('script')
-
 @endsection
