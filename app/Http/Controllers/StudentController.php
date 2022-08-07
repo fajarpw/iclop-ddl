@@ -7,17 +7,39 @@ use App\DDLStudent;
 use App\Exercise;
 use App\ExerciseQuestion;
 use App\Question;
+use App\Submission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
     public function dashboard()
     {
-        $classes = DDLClass::all();
-        return view('student.dashboard', compact('classes'));
+        return view('student.dashboard');
+    }
+    // Nilai
+    public function resultList()
+    {
+        $exercises = Exercise::all();
+        return view('student.result.result-list', compact('exercises'));
     }
 
+    public function exerciseResult(Request $request)
+    {
+        // $submissons = Submission::where('student_id', '=', Auth::user()->id)->get();
+        $submissons = DB::table('submissions')
+        ->where('student_id', '=', Auth::user()->id)
+        ->join('questions', 'submissions.question_id', 'questions.id')
+        ->join('exercise_questions', 'questions.id', 'exercise_questions.question_id')
+        ->where('exercise_questions.exercise_id', '=', $request->id)
+        ->select('questions.title', 'submissions.status', 'submissions.solution')
+        ->get();
+        return view('student.result.exercise-result', compact('submissons'));
+    }
+
+    // Latihan
     public function exercise()
     {
         $exercises = Exercise::all();

@@ -22,11 +22,15 @@ Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], func
 });
 
 Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], function () {
-    Route::get('beranda', [StudentController::class, 'dashboard'])->name('student.dashboard');
+    Route::get('home', [StudentController::class, 'dashboard'])->name('student.dashboard');
+
     Route::get('latihan', [StudentController::class, 'exercise'])->name('student.exercise');
     Route::get('latihan/{id}', [StudentController::class, 'exercise_question'])->name('student.exercise.question');
     Route::get('latihan/q/{id}', [StudentController::class, 'exercise_question_detail'])->name('student.exercise.question.detail');
+    
     Route::post('runtest', [ValidatorController::class, 'runtest'])->name('student.runtest');
     Route::post('submittest', [ValidatorController::class, 'submittest'])->name('student.submittest');
-    Route::post('enroll', [StudentController::class, 'enroll'])->name('student.enroll.class');
+    
+    Route::get('result-list', [StudentController::class, 'resultList'])->name('student.result.list');
+    Route::get('exercise-result/{id}', [StudentController::class, 'exerciseResult'])->name('student.exercise.result');
 });

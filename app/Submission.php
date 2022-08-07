@@ -11,4 +11,9 @@ class Submission extends Model
     protected $fillable = [
         'student_id', 'question_id', 'status', 'solution'
     ];
+
+    public function questions()
+    {
+        return $this->belongsTo('App\Question', 'question_id');
+    }
 }

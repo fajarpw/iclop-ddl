@@ -1,7 +1,7 @@
 @extends('student.layouts.student-layout')
 @section('content-header')
-<h4 style="font-weight: bold">Daftar Latihan</h4>
-<p>Anda dapat mengerjakan latihan di bawah ini sebelum melakukan penilian.</p>
+<h4 style="font-weight: bold">Daftar Nilai</h4>
+<p>Anda dapat melihat nilai dari Tugas dan Ujian yang telah Anda lakukan.</p>
 @endsection
 @section('content')
 <div class="row">
@@ -10,12 +10,12 @@
         <div class="small-box bg-dark">
             <div class="inner">
                 <h3>{{$exercise -> {'name'} }}</h3>
-                <p>{{$exercise -> year['name'] }}</p>
+                <p>Nilai</p>
             </div>
             <div class="icon">
                 <i class="ion ion-bag"></i>
             </div>
-            <a href="{{route('student.exercise.question', ['id' => $exercise ->{'id'} ])}}" class="small-box-footer bg-blue">Kerjakan <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{route('student.exercise.result', ['id' => $exercise ->{'id'} ])}}" class="small-box-footer bg-blue">Detail <i class="fas fa-info-circle"></i></a>
         </div>
     </div>
     @empty

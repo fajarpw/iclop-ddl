@@ -1,6 +1,7 @@
 @extends('student.layouts.student-layout')
 @section('content-header')
 <h5 style="font-weight: bold">Daftar Soal Latihan</h5>
+<p class="font-weight-class">{{ $exercise_questions[0] -> exercise['name'] }}</p>
 @endsection
 @section('content')
 <div class="row">

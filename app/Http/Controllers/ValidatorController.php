@@ -213,7 +213,7 @@ class ValidatorController extends Controller
             if ($this->isAllowSubmit == true) {
 
                 $result = Submission::updateOrCreate(
-                    ['user_id' => $request->user_id, 'task_id' => $request->task_id],
+                    ['student_id' => $request->user_id, 'question_id' => $request->task_id],
                     ['status' => 'Passed', 'solution' => $request->code]
                 );
 
@@ -233,7 +233,7 @@ class ValidatorController extends Controller
             } else {
 
                 $result = Submission::updateOrCreate(
-                    ['user_id' => $request->user_id, 'task_id' => $request->task_id],
+                    ['student_id' => $request->user_id, 'question_id' => $request->task_id],
                     ['status' => 'Failed', 'solution' => $request->code]
                 );
 

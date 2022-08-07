@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Exercise extends Model
 {
     protected $fillable = [
-        'name', 'description',
+        'year_id','name', 'description',
     ];
+
+    public function year()
+    {
+        return $this->belongsTo('App\Year', 'year_id');
+    }
 }

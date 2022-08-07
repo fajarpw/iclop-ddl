@@ -126,9 +126,7 @@
                         toastr.success(response.message);
                     }else{
                         toastr.warning(response.message);
-                    }
-                    
-                        
+                    }        
                 },
                 error: function(){
                     $("#output").html("Something went wrong!");

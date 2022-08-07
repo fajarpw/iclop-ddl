@@ -52,7 +52,7 @@
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" class="nav-link dropdown-toggle">Pembelajaran</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="{{route('student.exercise')}}" class="dropdown-item">Materi & Latihan</a>
+                                <li><a href="{{route('student.exercise')}}" class="dropdown-item">Latihan</a>
                                 </li>
                             </ul>
                         </li>
@@ -62,6 +62,15 @@
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                 <li><a href="#" class="dropdown-item">Tugas</a></li>
                                 <li class="dropdown-divider"></li>
+                                <li><a href="#" class="dropdown-item">Ujian</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false" class="nav-link dropdown-toggle">Nilai</a>
+                            <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                                <li><a href="{{route('student.result.list')}}" class="dropdown-item">Latihan</a></li>
+                                <li><a href="#" class="dropdown-item">Tugas</a></li>
                                 <li><a href="#" class="dropdown-item">Ujian</a></li>
                             </ul>
                         </li>
@@ -150,7 +159,7 @@
     <script src="{{asset('sweetalert2/sweetalert2.min.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('toastr/toastr.min.js')}}"></script>
-    <script src="{{asset('toastr/toastr.min.js')}}"></script>
+
     <script>
         toastr.options = {
             "closeButton": true,
@@ -169,7 +178,7 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
         }
-
+        
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
