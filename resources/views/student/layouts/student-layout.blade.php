@@ -64,7 +64,7 @@
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
                                 <li><a href="{{route('student.task')}}" class="dropdown-item">Tugas</a></li>
                                 <li class="dropdown-divider"></li>
-                                <li><a href="#" class="dropdown-item">Ujian</a></li>
+                                <li><a href="{{route('student.exam')}}" class="dropdown-item">Ujian</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

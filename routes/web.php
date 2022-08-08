@@ -24,13 +24,20 @@ Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], func
 Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], function () {
     Route::get('home', [StudentController::class, 'dashboard'])->name('student.dashboard');
 
+    //Latihan
     Route::get('latihan', [StudentController::class, 'exercise'])->name('student.exercise');
     Route::get('latihan/{id}', [StudentController::class, 'exercise_question'])->name('student.exercise.question');
     Route::get('latihan/{exercise_id}/{question_id}', [StudentController::class, 'exercise_question_detail'])->name('student.exercise.question.detail');
 
+    //Tugas
     Route::get('tugas', [StudentController::class, 'task'])->name('student.task');
     Route::get('tugas/{id}', [StudentController::class, 'task_question'])->name('student.task.question');
     Route::get('tugas/{task_id}/{question_id}', [StudentController::class, 'task_question_detail'])->name('student.task.question.detail');
+
+    //Ujian
+    Route::get('ujian', [StudentController::class, 'exam'])->name('student.exam');
+    Route::get('ujian/{id}', [StudentController::class, 'exam_question'])->name('student.exam.question');
+    Route::get('ujian/{exam_id}/{question_id}', [StudentController::class, 'exam_question_detail'])->name('student.exam.question.detail');
 
     Route::post('runtest', [ValidatorController::class, 'runtest'])->name('student.runtest');
     Route::post('submittest', [ValidatorController::class, 'submittest'])->name('student.submittest');

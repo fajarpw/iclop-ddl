@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\DDLClass;
 use App\DDLStudent;
+use App\Exam;
+use App\ExamQuestion;
 use App\Exercise;
 use App\ExerciseQuestion;
 use App\Question;
@@ -95,4 +97,31 @@ class StudentController extends Controller
         // dd($question_count);
         return view('student.question', compact('questions', 'question_count'));
     }
+
+        //ujian
+        public function exam()
+        {
+            $exams = Exam::all();
+            return view('student.exam.exam-list', compact('exams'));
+        }
+    
+        public function exam_question(Request $request)
+        {
+            $exam_questions = ExamQuestion::where('exam_id', '=', $request->id)->orderBy('id')->get();
+            return view('student.exam.exam-question', compact('exam_questions'));
+        }
+    
+        public function exam_question_detail(Request $request)
+        {
+            //$questions = Question::where('id', '=', $request->id)->get();
+            $questions = DB::table('questions')
+                ->where('questions.id', '=', $request->question_id)
+                ->join('exam_questions', 'questions.id','=', 'exam_questions.question_id')
+                ->where('exam_questions.exam_id', '=', $request->exam_id)
+                ->select('questions.id', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'exam_questions.no', 'exam_questions.exam_id')
+                ->get();
+            $question_count = count($questions);
+            // dd($question_count);
+            return view('student.question', compact('questions', 'question_count'));
+        }
 }
