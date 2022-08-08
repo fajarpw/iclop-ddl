@@ -4,22 +4,21 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ExerciseQuestion extends Model
+class TaskQuestion extends Model
 {
-    protected $table = 'exercise_questions';
+    protected $table = 'task_questions';
 
     protected $fillable = [
-        'exercise_id', 'question_id', 'no'
+        'task_id', 'question_id', 'no'
     ];
 
-    public function exercise()
+    public function task()
     {
-        return $this->belongsTo('App\Exercise', 'exercise_id');
+        return $this->belongsTo('App\Task', 'task_id');
     }
 
     public function question()
     {
         return $this->belongsTo('App\Question', 'question_id');
     }
-
 }

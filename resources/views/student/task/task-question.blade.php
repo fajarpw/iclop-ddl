@@ -1,10 +1,10 @@
 @extends('student.layouts.student-layout')
 @section('title')
-iCLOP | Soal Latihan
+iCLOP | Soal Tugas
 @endsection
 @section('content-header')
-<h5 style="font-weight: bold">Daftar Soal Latihan</h5>
-<p class="font-weight-class">{{ $exercise_questions[0] -> exercise['name'] }}</p>
+<h5 style="font-weight: bold">Daftar Soal Tugas</h5>
+<p class="font-weight-class">{{ $task_questions[0] -> task['name'] }}</p>
 @endsection
 @section('content')
 <div class="row">
@@ -20,16 +20,19 @@ iCLOP | Soal Latihan
                 </tr>
             </thead>
             <tbody>
-                @forelse ($exercise_questions as $questions)
+                @forelse ($task_questions as $question)
                 <tr>
-                    <td>{{$questions -> {'no'} }}</td>
-                    <td>{{$questions -> question['title'] }}</td>
-                    <td>{{$questions -> question['topic'] }}</td>
-                    <td>{{$questions -> question['description'] }}</td>
-                    <td> <a class="btn btn-primary"
-                            href="{{route('student.exercise.question.detail', ['question_id' => $questions->{'question_id'}, 'exercise_id' => $questions->{'exercise_id'} ] )}}"
+                    <td>{{$question -> {'no'} }}</td>
+                    <td>{{$question -> question['title']}}</td>
+                    <td>{{$question -> question['topic']}}</td>
+                    <td>{{$question -> question['description']}}</td>
+                    <td>
+                        <a class="btn btn-primary"
+                            href="{{route('student.task.question.detail', ['question_id' => $question->{'question_id'}, 'task_id' => $question->{'task_id'} ] )}}"
                             target="_blank">
-                            <i class="fas fa-pencil-alt"></i></a></td>
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+                    </td>
                 </tr>
             </tbody>
             @empty

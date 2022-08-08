@@ -8,6 +8,8 @@ use App\Exercise;
 use App\ExerciseQuestion;
 use App\Question;
 use App\Submission;
+use App\Task;
+use App\TaskQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
+    //Home
     public function dashboard()
     {
         return view('student.dashboard');
@@ -30,12 +33,12 @@ class StudentController extends Controller
     {
         // $submissons = Submission::where('student_id', '=', Auth::user()->id)->get();
         $submissons = DB::table('submissions')
-        ->where('student_id', '=', Auth::user()->id)
-        ->join('questions', 'submissions.question_id', 'questions.id')
-        ->join('exercise_questions', 'questions.id', 'exercise_questions.question_id')
-        ->where('exercise_questions.exercise_id', '=', $request->id)
-        ->select('questions.title', 'submissions.status', 'submissions.solution')
-        ->get();
+            ->where('student_id', '=', Auth::user()->id)
+            ->join('questions', 'submissions.question_id', 'questions.id')
+            ->join('exercise_questions', 'questions.id', 'exercise_questions.question_id')
+            ->where('exercise_questions.exercise_id', '=', $request->id)
+            ->select('questions.title', 'submissions.status', 'submissions.solution')
+            ->get();
         return view('student.result.exercise-result', compact('submissons'));
     }
 
@@ -56,38 +59,40 @@ class StudentController extends Controller
     {
         //$questions = Question::where('id', '=', $request->id)->get();
         $questions = DB::table('questions')
-        ->where('questions.id', '=', $request->question_id)
-        ->join('exercise_questions', 'questions.id', 'exercise_questions.id')
-        ->where('exercise_questions.exercise_id', '=', $request->exercise_id)
-        ->select('questions.id','questions.title', 'questions.topic','questions.dbname','questions.description','questions.required_table','questions.test_code','questions.guide','questions.no', 'exercise_questions.exercise_id')
-        ->get();
+            ->where('questions.id', '=', $request->question_id)
+            ->join('exercise_questions', 'questions.id','=', 'exercise_questions.question_id')
+            ->where('exercise_questions.exercise_id', '=', $request->exercise_id)
+            ->select('questions.id', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'exercise_questions.no', 'exercise_questions.exercise_id')
+            ->get();
         $question_count = count($questions);
         // dd($question_count);
         return view('student.question', compact('questions', 'question_count'));
     }
 
-    public function enroll(Request $request)
+    //Tugas
+    public function task()
     {
-        $user_id = $request->user_id;
-        $class_id = $request->class_id;
-        //$user = User::find($user_id);
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required|string',
-            'class_id' => 'required|string',
-        ]);
+        $tasks = Task::all();
+        return view('student.task.task-list', compact('tasks'));
+    }
 
-        if ($validator->fails()) {
-            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
-        } else {
-            $student = DDLStudent::updateOrCreate(
-                ['student_id' => $user_id,],
-                ['student_id' => $user_id, 'class_id' => $class_id]
-            );
-            if ($student) {
-                return response()->json(['code' => 1, 'msg' => 'Berhasil enroll kelas ' . $class_id]);
-            } else {
-                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
-            }
-        }
+    public function task_question(Request $request)
+    {
+        $task_questions = TaskQuestion::where('task_id', '=', $request->id)->orderBy('id')->get();
+        return view('student.task.task-question', compact('task_questions'));
+    }
+
+    public function task_question_detail(Request $request)
+    {
+        //$questions = Question::where('id', '=', $request->id)->get();
+        $questions = DB::table('questions')
+            ->where('questions.id', '=', $request->question_id)
+            ->join('task_questions', 'questions.id','=', 'task_questions.question_id')
+            ->where('task_questions.task_id', '=', $request->task_id)
+            ->select('questions.id', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'task_questions.no', 'task_questions.task_id')
+            ->get();
+        $question_count = count($questions);
+        // dd($question_count);
+        return view('student.question', compact('questions', 'question_count'));
     }
 }

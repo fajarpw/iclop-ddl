@@ -9,7 +9,7 @@ window.onload = function () {
         enableBasicAutocompletion: true,
         enableSnippets: true,
         // enableLiveAutocompletion: true,
-        fontSize: "14pt"
+        fontSize: "12pt"
     });
 
     // Prevent Copy/Paste (CTRL+C/CRTL+V)
