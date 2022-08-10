@@ -53,22 +53,27 @@ class StudentController extends Controller
 
     public function exercise_question(Request $request)
     {
-        $exercise_questions = ExerciseQuestion::where('exercise_id', '=', $request->id)->orderBy('id')->get();
+        $exercise_questions = ExerciseQuestion::where('exercise_id', '=', $request->id)->orderBy('no')->get();
         return view('student.exercise.exercise-question', compact('exercise_questions'));
     }
 
     public function exercise_question_detail(Request $request)
     {
-        //$questions = Question::where('id', '=', $request->id)->get();
-        $questions = DB::table('questions')
-            ->where('questions.id', '=', $request->question_id)
-            ->join('exercise_questions', 'questions.id','=', 'exercise_questions.question_id')
-            ->where('exercise_questions.exercise_id', '=', $request->exercise_id)
-            ->select('questions.id', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'exercise_questions.no', 'exercise_questions.exercise_id')
-            ->get();
-        $question_count = count($questions);
+
+        // $questions = DB::table('questions')
+        //     ->where('questions.id', '=', $request->exercise_questions)
+        //     ->join('exercise_questions', 'questions.id','=', 'exercise_questions.question_id')
+        //     ->where('exercise_questions.exercise_id', '=', $request->exercise_id)
+        //     ->select('exercise_questions.no', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'exercise_questions.no', 'exercise_questions.exercise_id')
+        //     ->get();
+        $questions = DB::table('exercise_questions')
+        ->where('exercise_questions.no', '=', $request->question_no)
+        ->join('questions', 'exercise_questions.id', '=', 'questions.id')
+        ->select('exercise_questions.no', 'questions.id', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'exercise_questions.no', 'exercise_questions.exercise_id')
+        ->get();
+        $question_count = ExerciseQuestion::where('exercise_id', '=', $request->exercise_id)->get()->count();
         // dd($question_count);
-        return view('student.question', compact('questions', 'question_count'));
+        return view('student.question', compact('questions', 'question_count',));
     }
 
     //Tugas

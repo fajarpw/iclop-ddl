@@ -23,7 +23,7 @@ iCLOP | DDL
         @else
         <div class="col-3">
             <button id="prevBtn" class="btn btn-primary w-100 data-toggle=" tooltip" data-placement="bottom"
-                title="Sebelumnya" onclick="window.location.href='/m/latihan/q/{{ $question -> {'no'} - 1}}'"><i
+                title="Sebelumnya" onclick="window.location.href='/m/latihan/{{ $question -> {'exercise_id'} }}/{{ $question -> {'no'} - 1}}'"><i
                     class="fa fa-angle-left"></i></button>
         </div>
         @endif

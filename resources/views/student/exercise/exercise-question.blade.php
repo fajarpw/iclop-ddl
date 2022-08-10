@@ -27,7 +27,7 @@ iCLOP | Soal Latihan
                     <td>{{$questions -> question['topic'] }}</td>
                     <td>{{$questions -> question['description'] }}</td>
                     <td> <a class="btn btn-primary"
-                            href="{{route('student.exercise.question.detail', ['question_id' => $questions->{'question_id'}, 'exercise_id' => $questions->{'exercise_id'} ] )}}"
+                            href="{{route('student.exercise.question.detail', ['question_no' => $questions->{'no'}, 'exercise_id' => $questions->{'exercise_id'} ] )}}"
                             target="_blank">
                             <i class="fas fa-pencil-alt"></i></a></td>
                 </tr>

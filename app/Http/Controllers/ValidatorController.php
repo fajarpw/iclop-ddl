@@ -14,7 +14,7 @@ class ValidatorController extends Controller
 
     protected function displayHint($myhint)
     {
-        $hint = "<div style='color: red; font-weight:bold; background-color:rgba(255, 255, 0, 0.2);'>";
+        $hint = "<div class='alert alert-danger'>";
         $hint .= "<i class='fa-solid fa-triangle-exclamation'></i> " .  $myhint;
         $hint .= "</div>";
         return $hint;
@@ -22,7 +22,7 @@ class ValidatorController extends Controller
 
     protected function displayError($myerror)
     {
-        $error = "<div id='output-text' style='color: red; background-color:rgba(255, 0, 0, 0.15);'>";
+        $error = "<div id='output-text' class='alert alert-danger'>";
         $error .= $myerror;
         $error .= "</div>";
         return $error;

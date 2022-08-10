@@ -27,7 +27,7 @@ Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], func
     //Latihan
     Route::get('latihan', [StudentController::class, 'exercise'])->name('student.exercise');
     Route::get('latihan/{id}', [StudentController::class, 'exercise_question'])->name('student.exercise.question');
-    Route::get('latihan/{exercise_id}/{question_id}', [StudentController::class, 'exercise_question_detail'])->name('student.exercise.question.detail');
+    Route::get('latihan/{exercise_id}/{question_no}', [StudentController::class, 'exercise_question_detail'])->name('student.exercise.question.detail');
 
     //Tugas
     Route::get('tugas', [StudentController::class, 'task'])->name('student.task');
