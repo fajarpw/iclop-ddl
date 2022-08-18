@@ -67,8 +67,9 @@ class StudentController extends Controller
         //     ->select('exercise_questions.no', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'exercise_questions.no', 'exercise_questions.exercise_id')
         //     ->get();
         $questions = DB::table('exercise_questions')
+        ->where('exercise_questions.exercise_id', '=', $request->exercise_id)
         ->where('exercise_questions.no', '=', $request->question_no)
-        ->join('questions', 'exercise_questions.id', '=', 'questions.id')
+        ->join('questions', 'exercise_questions.question_id', '=', 'questions.id')
         ->select('exercise_questions.no', 'questions.id', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'exercise_questions.no', 'exercise_questions.exercise_id')
         ->get();
         $question_count = ExerciseQuestion::where('exercise_id', '=', $request->exercise_id)->get()->count();

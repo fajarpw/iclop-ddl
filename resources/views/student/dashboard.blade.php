@@ -11,7 +11,7 @@ iCLOP | Beranda
 @endsection
 @section('content')
 <div class="row">
-    <embed src="{{Storage::disk('local')->url('/ddl_guidance/Pengantar.pdf')}}" type="application/pdf"
-        style="width: 100%; height: 500px;">
+    {{-- <embed src="{{Storage::disk('local')->url('/ddl_guidance/Pengantar.pdf')}}" type="application/pdf"
+        style="width: 100%; height: 500px;"> --}}
 </div>
 @endsection
