@@ -5,6 +5,12 @@ iCLOP | Soal Latihan
 @section('content-header')
 <h5 style="font-weight: bold">Daftar Soal Latihan</h5>
 <p class="font-weight-class">{{ $exercise_questions[0] -> exercise['name'] }}</p>
+<div class="progress mb-3">
+    <div class="progress-bar bg-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0"
+        aria-valuemax="100" style="width: {{ $completions . "%"}}">
+        {{-- <span class="sr-only">40% Complete (success)</span> --}}
+    </div>
+</div>
 @endsection
 @section('content')
 <div class="row">

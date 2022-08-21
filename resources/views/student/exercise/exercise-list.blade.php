@@ -18,7 +18,8 @@ iCLOP | Latihan
             <div class="icon">
                 <i class="ion ion-bag"></i>
             </div>
-            <a href="{{route('student.exercise.question', ['id' => $exercise ->{'id'} ])}}" class="small-box-footer bg-blue">Kerjakan <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{route('student.exercise.question', ['id' => $exercise ->{'id'} ])}}"
+                class="small-box-footer bg-blue">Kerjakan <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     @empty
