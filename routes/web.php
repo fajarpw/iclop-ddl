@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ValidatorController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,10 @@ Route::get('/layout', 'HomeController@index')->name('layout');
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::group(['prefix' => 'a', 'middleware' => ['admin', 'auth', 'pvb']], function () {
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
 
 Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], function () {

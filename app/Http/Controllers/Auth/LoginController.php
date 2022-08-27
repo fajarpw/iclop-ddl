@@ -32,6 +32,8 @@ class LoginController extends Controller
     {
         if (Auth()->user()->role == 'teacher') {
             return route('teacer.dashboard');
+        } elseif (Auth()->user()->role == 'admin') {
+            return route('admin.dashboard');
         } else {
             return route('student.dashboard');
         }
@@ -47,21 +49,24 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $input = $request->all();
-        $this->validate($request,[
+        $this->validate($request, [
             'email' => 'required|email|exists:users,email',
             'password' => 'required|min:8',
         ]);
 
-        if(auth()->attempt(array('email'=>$input['email'], 'password'=>$input['password']))){
-            if(auth()->user()->role == 'teacher'){
+        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+            if (auth()->user()->role == 'teacher') {
                 return redirect()->route('teacher.dashboard');
-            }else{
+            } elseif (auth()->user()->role == 'admin') {
+                return redirect()->route('admin.dashboard');
+            } else {
                 return redirect()->route('student.dashboard');
             }
-        }else{
-            return redirect()->route('login')->with('error','Email atau password salah!');
+        } else {
+            return redirect()->route('login')->with('error', 'Email atau password salah!');
         }
     }
 }
