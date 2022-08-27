@@ -19,6 +19,11 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], function () {
     Route::get('dashboard', [TeacherController::class, 'dashboard'])->name('teacher.dashboard');
+    
+    Route::get('questions', [TeacherController::class, 'questions'])->name('teacher.questions');
+    Route::get('questions-list', [TeacherController::class, 'questionsList'])->name('teacher.questions.list');
+    
+    Route::get('exercises', [TeacherController::class, 'exercises'])->name('teacher.exercises');
 });
 
 Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], function () {
