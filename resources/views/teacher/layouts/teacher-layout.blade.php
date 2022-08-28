@@ -176,10 +176,11 @@
     <script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
     <script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
     <script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
-
     <!-- ChartJS -->
     <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
-
+    <!-- Toastr -->
+    <script src="{{asset('toastr/toastr.min.js')}}"></script>
+    <script src="{{asset('toastr/toastr.min.js')}}"></script>
     <script>
         $.ajaxSetup({
             headers: {
@@ -203,7 +204,25 @@
         document.getElementById('timestamp').innerHTML = date.toLocaleTimeString('id-ID');
     }
 
-     setInterval(showTime, 1000);
+    toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+    setInterval(showTime, 1000);
     </script>
     @yield('script')
 </body>

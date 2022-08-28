@@ -24,10 +24,15 @@ Route::group(['prefix' => 'a', 'middleware' => ['admin', 'auth', 'pvb']], functi
 
 Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], function () {
     Route::get('dashboard', [TeacherController::class, 'dashboard'])->name('teacher.dashboard');
-    
+
+    //Soal
     Route::get('questions', [TeacherController::class, 'questions'])->name('teacher.questions');
     Route::get('questions-list', [TeacherController::class, 'questionsList'])->name('teacher.questions.list');
     
+    Route::get('questions-detail', [TeacherController::class, 'detailQuestion'])->name('teacher.questions.detail');
+    Route::post('add-question', [TeacherController::class, 'addQuestion'])->name('teacher.questions.add');
+    Route::post('update-question', [TeacherController::class, 'updateQuestion'])->name('teacher.questions.update');
+
     Route::get('exercises', [TeacherController::class, 'exercises'])->name('teacher.exercises');
 });
 
