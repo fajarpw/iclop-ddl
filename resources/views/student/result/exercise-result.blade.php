@@ -13,6 +13,7 @@ iCLOP | Riwayat Latihan
 @section('content')
 <div class="row">
     <div class="col-12">
+        <h3>Nilai: {{$score}}</h3>
         <table class="table table-hover table-head-fixed text-nowrap">
             <thead>
                 <tr>
