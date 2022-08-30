@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Exercise;
 use App\Question;
+use App\Year;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -137,5 +139,23 @@ class TeacherController extends Controller
     public function exercises()
     {
         return view('teacher.exercises');
+    }
+
+    public function exercisesList()
+    {
+        $exercises = Exercise::all();
+        return DataTables::of($exercises)
+            ->addColumn('actions', function ($row) {
+                return
+                    '<div class="btn-group" role="group">
+                <button id="edit_topic_btn" type="button" class="btn btn-default" data-id="' . $row['id'] . '">Edit</button>
+                <button id="delete_topic_btn"  type="button" class="btn btn-default" data-id="' . $row['id'] . '">Delete</button>
+              </div>';
+            })
+            ->addColumn('year_name', function (Exercise $exercise) {
+                return $exercise->year->name;
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
     }
 }
