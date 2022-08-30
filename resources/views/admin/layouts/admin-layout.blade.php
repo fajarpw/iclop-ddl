@@ -24,11 +24,18 @@
     <link rel="stylesheet" href="{{asset('sweetalert2/sweetalert2.min.css')}}">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{asset('toastr/toastr.min.css')}}">
+    <!-- Datatable -->
+    <link rel="stylesheet" href="{{asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+    
+    <!-- Daterange Picker -->
+    <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
+
 </head>
 
 <body class="hold-transition layout-top-nav dark-mode">
     <div class="wrapper">
-
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand-md navbar-dark">
             <div class="container">
@@ -37,13 +44,11 @@
                         style="opacity: .8">
                     <span class="brand-text font-weight-light">iCLOP</span>
                 </a>
-
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse"
                     data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse order-3" id="navbarCollapse">
                     <!-- Left navbar links -->
                     <ul class="navbar-nav">
@@ -54,7 +59,7 @@
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" class="nav-link dropdown-toggle">Akademik</a>
                             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                                <li><a href="{{route('student.exercise')}}" class="dropdown-item">Tahun Ajaran</a></li>
+                                <li><a href="{{route('admin.year')}}" class="dropdown-item">Tahun Ajaran</a></li>
                                 <li><a href="{{route('student.exercise')}}" class="dropdown-item">Kelas</a></li>
                             </ul>
                         </li>
@@ -66,7 +71,6 @@
                         </li>
                     </ul>
                 </div>
-
                 <!-- Right navbar links -->
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                     <li class="nav-item dropdown">
@@ -149,6 +153,22 @@
     <script src="{{asset('sweetalert2/sweetalert2.min.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('toastr/toastr.min.js')}}"></script>
+    <!-- DataTable -->
+    <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('plugins/jszip/jszip.min.js')}}"></script>
+    <script src="{{asset('plugins/pdfmake/pdfmake.min.js')}}"></script>
+    <script src="{{asset('plugins/pdfmake/vfs_fonts.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
+    <!-- DataRange Picker -->
+    <script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
 
     <script>
         toastr.options = {

@@ -180,7 +180,6 @@
     <script src="{{asset('plugins/chart.js/Chart.min.js')}}"></script>
     <!-- Toastr -->
     <script src="{{asset('toastr/toastr.min.js')}}"></script>
-    <script src="{{asset('toastr/toastr.min.js')}}"></script>
     <script>
         $.ajaxSetup({
             headers: {

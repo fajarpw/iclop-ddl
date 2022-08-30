@@ -20,6 +20,10 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'a', 'middleware' => ['admin', 'auth', 'pvb']], function () {
     Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    Route::get('year', [AdminController::class, 'year'])->name('admin.year');
+    Route::get('year-list', [AdminController::class, 'yearList'])->name('admin.year.list');
+    Route::post('year-add', [AdminController::class, 'yearAdd'])->name('admin.year.add');
 });
 
 Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], function () {
