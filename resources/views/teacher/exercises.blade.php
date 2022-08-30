@@ -21,26 +21,26 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{route('teacher.questions.add')}}" enctype="multipart/form-data" method="POST"
+                        <form action="{{route('teacher.exercises.add')}}" enctype="multipart/form-data" method="POST"
                             id="add_exercise">
                             @csrf
                             <div class="form-row">
                                 <div class="form-group col-sm-6">
-                                    <label for="title">Nama</label>
+                                    <label for="name">Nama</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="title" placeholder="Nama tugas">
+                                        <input type="text" class="form-control" name="name" placeholder="Nama tugas">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-book"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="text-danger error-text title_error"></span>
+                                    <span class="text-danger error-text name_error"></span>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="topic">Tahun Ajaran</label>
+                                    <label for="year_id">Tahun Ajaran</label>
                                     <div class="input-group">
-                                        <select class="form-control" name="topic">
+                                        <select class="form-control" name="year_id">
                                             <option selected disabled>- Tahun Ajaran -</option>
                                             @forelse ($years as $year)
                                             <option value="{{$year-> {'id'} }}">{{$year-> {'name'} }}</option>
@@ -54,24 +54,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="text-danger error-text topic_error"></span>
+                                    <span class="text-danger error-text year_id_error"></span>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-sm-12">
-                                    <label for="dbname">Nama Database </label>
-                                    <span class="fas fa-question" data-toggle="tooltip_dbname" data-placement="right"
-                                        title="Nama Database yang akan digunakan untuk pembelajaran."></span>
+                                    <label for="description">Deskripsi</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="dbname"
-                                            placeholder="Nama database">
+                                        <input type="text" class="form-control" name="description"
+                                            placeholder="Deskripsi">
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-database"></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="text-danger error-text dbname_error"></span>
+                                    <span class="text-danger error-text description_error"></span>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-warning btn-block">Simpan Perubahan</button>
@@ -135,7 +133,7 @@
             ]
         });
 
-        $('#add_question').on('submit', function(e){
+        $('#add_exercise').on('submit', function(e){
             e.preventDefault();
             var form = this;
             $.ajax({
@@ -155,8 +153,9 @@
                         });
                     } else {
                         $(form)[0].reset();
-                        toastr.success(data.msg);
-                        $('#task_table').load(location.href + " #task_table" );
+                        // toastr.success(data.msg);
+                        alert(data.msg);
+                        $('#exercise_table').DataTable().ajax.reload(null, false);
                     }
                 }
             });

@@ -160,4 +160,29 @@ class TeacherController extends Controller
             ->rawColumns(['actions'])
             ->make(true);
     }
+
+    public function exercisesAdd(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'year_id' => 'required|string',
+            'description' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+            $exercise = new Exercise();
+            $exercise->name = $request->name;
+            $exercise->year_id = $request->year_id;
+            $exercise->description = $request->description;
+            $query = $exercise->save();
+
+            if (!$query) {
+                return response()->json(['code' => 0, 'msg' => 'Terjadi kesalahan']);
+            } else {
+                return response()->json(['code' => 1, 'msg' => 'Latihan baru berhasil ditambahkan']);
+            }
+        }
+    }
 }

@@ -39,7 +39,7 @@ Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], func
 
     Route::get('exercises', [TeacherController::class, 'exercises'])->name('teacher.exercises');
     Route::get('exercises-list', [TeacherController::class, 'exercisesList'])->name('teacher.exercises.list');
-    Route::get('exercises-add', [TeacherController::class, 'exercisesAdd'])->name('teacher.exercises.Add');
+    Route::post('exercises-add', [TeacherController::class, 'exercisesAdd'])->name('teacher.exercises.add');
 });
 
 Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], function () {
