@@ -138,7 +138,9 @@ class TeacherController extends Controller
 
     public function exercises()
     {
-        return view('teacher.exercises');
+        $years = Year::all();
+        // dd($years);
+        return view('teacher.exercises', compact('years'));
     }
 
     public function exercisesList()

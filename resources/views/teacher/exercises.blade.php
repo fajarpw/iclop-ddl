@@ -38,15 +38,15 @@
                                     <span class="text-danger error-text title_error"></span>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label for="topic">Topik</label>
+                                    <label for="topic">Tahun Ajaran</label>
                                     <div class="input-group">
                                         <select class="form-control" name="topic">
-                                            <option selected disabled>- Pilih Topik -</option>
-                                            <option value="CREATE Database">CREATE Database</option>
-                                            <option value="CREATE Table">CREATE Table</option>
-                                            <option value="ALTER Table">ALTER Table</option>
-                                            <option value="DROP Table">DROP Table</option>
-                                            <option value="DROP Database">DROP Database</option>
+                                            <option selected disabled>- Tahun Ajaran -</option>
+                                            @forelse ($years as $year)
+                                            <option value="{{$year-> {'id'} }}">{{$year-> {'name'} }}</option>
+                                            @empty
+                                            <option value="CREATE Database" disabled>CREATE Database</option>
+                                            @endforelse
                                         </select>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
