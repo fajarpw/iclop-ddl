@@ -101,7 +101,7 @@
     </div>
 </div>
 </div>
-@include('teacher/edit-question-modal')
+@include('teacher/edit-exercise-modal')
 @endsection
 
 @section('script')
@@ -161,26 +161,21 @@
             });
         });
 
-        $(document).on('click', '#editQuestion', function () { 
-            const question_id = $(this).data('id');
-            const url = '{{route("teacher.questions.detail")}}'
-            $('.editQuestionModal').find('form')[0].reset();
-            $.get(url, { question_id: question_id }, function (data) {
-                const questionModal = $('.editQuestionModal');
-                $(questionModal).find('form').find('input[name="qid"]').val(data.details.id);
-                $(questionModal).find('form').find('input[name="title"]').val(data.details.title);
-                $(questionModal).find('form').find('select[name="topic"]').val(data.details.topic);
-                $(questionModal).find('form').find('input[name="score"]').val(data.details.score);
-                $(questionModal).find('form').find('input[name="dbname"]').val(data.details.dbname);
-                $(questionModal).find('form').find('textarea[name="required_table"]').val(data.details.required_table);
-                $(questionModal).find('form').find('textarea[name="description"]').val(data.details.description);
-                $(questionModal).find('form').find('textarea[name="test_code"]').val(data.details.test_code);
-                $(questionModal).find('form').find('input[type="file"]').val('');
-                $(questionModal).modal('show');
+        $(document).on('click', '#editExercise', function () { 
+            const exercise_id = $(this).data('id');
+            const url = '{{route("teacher.exercises.detail")}}'
+            $('.editExerciseModal').find('form')[0].reset();
+            $.get(url, { exercise_id: exercise_id }, function (data) {
+                const exerciseModal = $('.editExerciseModal');
+                $(exerciseModal).find('form').find('input[name="eid"]').val(data.details.id);
+                $(exerciseModal).find('form').find('input[name="name"]').val(data.details.name);
+                $(exerciseModal).find('form').find('select[name="year_id"]').val(data.details.year_id);
+                $(exerciseModal).find('form').find('input[name="description"]').val(data.details.description);
+                $(exerciseModal).modal('show');
             }, 'json');
         });
 
-        $('#update_question').on('submit', function(e){
+        $('#update_exercise').on('submit', function(e){
             e.preventDefault();
             var form = this;
             $.ajax({
@@ -199,10 +194,11 @@
                             $(form).find('span.' + prefix + '_error').text(val[0]);
                         });
                     } else {
-                        $('#question_table').DataTable().ajax.reload(null, false);
-                        $('.editQuestionModal').modal('hide');
-                        $('.editQuestionModal').find('form')[0].reset();
-                        toastr.success(data.msg);
+                        $('#exercise_table').DataTable().ajax.reload(null, false);
+                        $('.editExerciseModal').modal('hide');
+                        $('.editExerciseModal').find('form')[0].reset();
+                        // toastr.success(data.msg);
+                        alert(data.msg)
                     }
                 }
             });

@@ -150,8 +150,8 @@ class TeacherController extends Controller
             ->addColumn('actions', function ($row) {
                 return
                     '<div class="btn-group" role="group">
-                <button id="edit_topic_btn" type="button" class="btn btn-default" data-id="' . $row['id'] . '">Edit</button>
-                <button id="delete_topic_btn"  type="button" class="btn btn-default" data-id="' . $row['id'] . '">Delete</button>
+                    <button id="editExercise" type="button" class="btn btn-primary btn-block" data-id="' . $row['id'] . '">
+                    <i class="fa fa-edit"></i>
               </div>';
             })
             ->addColumn('year_name', function (Exercise $exercise) {
@@ -182,6 +182,38 @@ class TeacherController extends Controller
                 return response()->json(['code' => 0, 'msg' => 'Terjadi kesalahan']);
             } else {
                 return response()->json(['code' => 1, 'msg' => 'Latihan baru berhasil ditambahkan']);
+            }
+        }
+    }
+
+    public function exercisesDetail(Request $request)
+    {
+        $exerciseDetail = Exercise::find($request->exercise_id);
+        return response()->json(['code' => 1, 'details' => $exerciseDetail]);
+    }
+
+    public function exercisesUpdate(Request $request)
+    {
+        $exercise_id = $request->eid;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'year_id' => 'required|string',
+            'description' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+            $exercise = Exercise::find($exercise_id);
+            $exercise->name = $request->name;
+            $exercise->year_id = $request->year_id;
+            $exercise->description = $request->description;
+            $query = $exercise->save();
+
+            if (!$query) {
+                return response()->json(['code' => 0, 'msg' => 'Terjadi kesalahan']);
+            } else {
+                return response()->json(['code' => 1, 'msg' => 'Latihan berhasil diperbarui']);
             }
         }
     }
