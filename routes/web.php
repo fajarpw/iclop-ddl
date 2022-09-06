@@ -42,6 +42,8 @@ Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], func
     Route::post('exercises-add', [TeacherController::class, 'exercisesAdd'])->name('teacher.exercises.add');
     Route::get('exercises-detail', [TeacherController::class, 'exercisesDetail'])->name('teacher.exercises.detail');
     Route::post('exercises-update', [TeacherController::class, 'exercisesUpdate'])->name('teacher.exercises.update');
+
+    Route::get('exercises-result', [TeacherController::class, 'exercisesResult'])->name('teacher.exercises.result');
 });
 
 Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], function () {

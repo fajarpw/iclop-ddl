@@ -217,4 +217,9 @@ class TeacherController extends Controller
             }
         }
     }
+
+    public function exercisesResult(){
+        $exercises = Exercise::all();
+        return view('teacher.exercise-result', compact('exercises'));
+    }
 }

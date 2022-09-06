@@ -173,7 +173,7 @@
 </div>
 <div class="row mt-3">
     <div class="col">
-        <table id="question_table" class="table table-bordered">
+        <table id="question_table" class="table table-striped">
             <thead>
                 <tr class="headings">
                     <th class="column-title">No </th>

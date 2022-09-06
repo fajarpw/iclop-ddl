@@ -85,7 +85,7 @@
 </div>
 <div class="row mt-3">
     <div class="col">
-        <table id="exercise_table" class="table table-bordered">
+        <table id="exercise_table" class="table table-striped">
             <thead>
                 <tr class="headings">
                     <th class="column-title">No </th>
