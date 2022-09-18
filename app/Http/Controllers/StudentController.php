@@ -39,7 +39,7 @@ class StudentController extends Controller
             ->join('questions', 'submissions.question_id', 'questions.id')
             ->join('exercise_questions', 'questions.id', 'exercise_questions.question_id')
             ->where('exercise_questions.exercise_id', '=', $request->id)
-            ->select('questions.title', 'submissions.status', 'submissions.solution')
+            ->select('submissions.id','questions.title', 'submissions.status', 'submissions.solution')
             ->get();
         $passed = DB::table('submissions')
         ->where('student_id', '=', Auth::user()->id)

@@ -222,4 +222,9 @@ class TeacherController extends Controller
         $exercises = Exercise::all();
         return view('teacher.exercise-result', compact('exercises'));
     }
+
+    public function studentExercisesResult(Request $request){
+        $exercises = Exercise::find($request->id);
+        return view('teacher.student-exercise-result', compact('exercises'));
+    }
 }
