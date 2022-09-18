@@ -54,6 +54,11 @@ class StudentController extends Controller
         return view('student.result.exercise-result', compact('submissons','score'));
     }
 
+    public function exerciseResultDetail(Request $request){
+        $detail = Submission::find($request->id);
+        return response()->json(['detail' => $detail]);
+    }
+
     // Latihan
     public function exercise()
     {

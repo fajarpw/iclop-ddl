@@ -34,11 +34,12 @@ iCLOP | Riwayat Latihan
                     @endif
 
                     <td>
-                        {{-- <a class="btn btn-primary btn-sm"
-                            href="{{route('student.exercise.question.detail', ['id' => $submisson->{'question_id'} ] )}}"
+                        <a class="btn btn-primary btn-sm"
+                            href="{{route('student.exercise.result.detail', ['id' => $submisson->{'id'} ] )}}"
                             target="_blank">
-                            <i class="fas fa-eye"></i></a> --}}
-                            sdfs
+                            <i class="fas fa-eye"></i></a>
+                        <button id="jawaban" class="btn btn-sm btn-primary" data-id={{ $submisson->{'id'} }}>
+                            <i class="fas fa-pen"></i> Jawaban</button>
                     </td>
                 </tr>
             </tbody>
@@ -51,4 +52,24 @@ iCLOP | Riwayat Latihan
         </table>
     </div>
 </div>
+@include('student.result.solution-modal')
+@endsection
+@section('script')
+<script>
+    $(document).ready(function(){
+            // Get task detail
+            $(document).on('click', '#jawaban', function () { 
+            const id = $(this).data('id');
+            const url = '{{route("student.exercise.result.detail")}}'
+            $.get(url, { id: id }, function (data) {
+                const solutionModal = $('.solutionModal');
+                // $(solutionModal).find('h5').text(data.details[0].title);
+                // $(solutionModal).find('h6').text(data.details[0].updated_at);
+                // $(solutionModal).find('.dateDiff').text("(" + data.details.dateDiff + ")");
+                $(solutionModal).find('code').text(data.detail.solution);
+                $(solutionModal).modal('show');
+            }, 'json');
+        });
+    });
+</script>
 @endsection

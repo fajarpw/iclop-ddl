@@ -67,6 +67,8 @@ Route::group(['prefix' => 'm', 'middleware' => ['student', 'auth', 'pvb']], func
     Route::post('runtest', [ValidatorController::class, 'runtest'])->name('student.runtest');
     Route::post('submittest', [ValidatorController::class, 'submittest'])->name('student.submittest');
 
+    //Hasil
     Route::get('result-list', [StudentController::class, 'resultList'])->name('student.result.list');
     Route::get('exercise-result/{id}', [StudentController::class, 'exerciseResult'])->name('student.exercise.result');
+    Route::get('exercise-result-detail', [StudentController::class, 'exerciseResultDetail'])->name('student.exercise.result.detail');
 });
