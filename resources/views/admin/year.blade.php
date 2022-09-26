@@ -11,7 +11,7 @@ iCLOP | Beranda
     <div class="col">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">
-            Tambah Soal
+            Tambah Tahun Ajaran
         </button>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -44,7 +44,8 @@ iCLOP | Beranda
                                 <div class="form-group col-sm-6">
                                     <label for="status">Status</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="status" placeholder="Status" disabled>
+                                        <input type="text" class="form-control" name="status" placeholder="Status"
+                                            disabled>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-book"></span>
@@ -111,6 +112,7 @@ iCLOP | Beranda
         </table>
     </div>
 </div>
+@include('admin/edit-year-modal')
 @endsection
 @section('script')
 <script>
@@ -140,27 +142,25 @@ iCLOP | Beranda
                 },
                 {
                     data: "actions",
-                    name: "actions"
+                    name: "actions",
+                    searchable: false,
+                    orderable: false,
                 },
             ]
         });
 
         $(document).on('click', '#editYear', function () { 
-            const question_id = $(this).data('id');
-            const url = '{{route("teacher.questions.detail")}}'
-            $('.editQuestionModal').find('form')[0].reset();
-            $.get(url, { question_id: question_id }, function (data) {
-                const questionModal = $('.editQuestionModal');
-                $(questionModal).find('form').find('input[name="qid"]').val(data.details.id);
-                $(questionModal).find('form').find('input[name="title"]').val(data.details.title);
-                $(questionModal).find('form').find('select[name="topic"]').val(data.details.topic);
-                $(questionModal).find('form').find('input[name="score"]').val(data.details.score);
-                $(questionModal).find('form').find('input[name="dbname"]').val(data.details.dbname);
-                $(questionModal).find('form').find('textarea[name="required_table"]').val(data.details.required_table);
-                $(questionModal).find('form').find('textarea[name="description"]').val(data.details.description);
-                $(questionModal).find('form').find('textarea[name="test_code"]').val(data.details.test_code);
-                $(questionModal).find('form').find('input[type="file"]').val('');
-                $(questionModal).modal('show');
+            const year_id = $(this).data('id');
+            const url = '{{route("admin.year.detail")}}'
+            $('.editYearModal').find('form')[0].reset();
+            $.get(url, { year_id: year_id }, function (data) {
+                const yearModal = $('.editYearModal');
+                $(yearModal).find('form').find('input[name="yid"]').val(data.details.id);
+                $(yearModal).find('form').find('input[name="name"]').val(data.details.name);
+                $(yearModal).find('form').find('input[name="start_date"]').val(data.details.start_date);
+                $(yearModal).find('form').find('input[name="end_date"]').val(data.details.end_date);
+                $(yearModal).find('form').find('input[name="status"]').val(data.details.status);
+                $(yearModal).modal('show');
             }, 'json');
         });
 
@@ -183,9 +183,9 @@ iCLOP | Beranda
                             $(form).find('span.' + prefix + '_error').text(val[0]);
                         });
                     } else {
-                        $('#question_table').DataTable().ajax.reload(null, false);
-                        $('.editQuestionModal').modal('hide');
-                        $('.editQuestionModal').find('form')[0].reset();
+                        $('#year_table').DataTable().ajax.reload(null, false);
+                        $('.editYearModal').modal('hide');
+                        $('.editYearModal').find('form')[0].reset();
                         toastr.success(data.msg);
                     }
                 }

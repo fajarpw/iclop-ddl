@@ -44,7 +44,8 @@ iCLOP | Beranda
                                 <div class="form-group col-sm-6">
                                     <label for="status">Status</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="status" placeholder="Status" disabled>
+                                        <input type="text" class="form-control" name="status" placeholder="Status"
+                                            disabled>
                                         <div class="input-group-append">
                                             <div class="input-group-text">
                                                 <span class="fas fa-book"></span>
@@ -142,7 +143,11 @@ iCLOP | Beranda
                     data: "actions",
                     name: "actions"
                 },
-            ]
+            ],
+            language: {
+                search: 'Cari: ',
+                searchPlaceholder: 'Cari data barang'
+            },
         });
 
         $(document).on('click', '#editYear', function () { 

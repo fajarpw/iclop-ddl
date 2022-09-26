@@ -26,7 +26,7 @@ class AdminController extends Controller
             ->addColumn('actions', function ($row) {
                 return
                     '<div class="btn-group" role="group">
-        <button id="editQuestion" type="button" class="btn btn-primary btn-block" data-id="' . $row['id'] . '">
+        <button id="editYear" type="button" class="btn btn-primary btn-block" data-id="' . $row['id'] . '">
         <i class="fa fa-edit"></i>
         </button> 
         </div>';
@@ -71,6 +71,40 @@ class AdminController extends Controller
                 return response()->json(['code' => 0, 'msg' => 'Terjadi kesalahan']);
             } else {
                 return response()->json(['code' => 1, 'msg' => 'Tahun Ajaran baru berhasil ditambahkan']);
+            }
+        }
+    }
+
+    public function yearDetail(Request $request)
+    {
+        $yearDetail = Year::find($request->year_id);
+        return response()->json(['code' => 1, 'details' => $yearDetail]);
+    }
+
+    public function yearUpdate(Request $request)
+    {
+        $year_id = $request->yid;
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'status' => 'required|string',
+            'start_date' => 'required|string',
+            'end_date' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+        } else {
+            $year = Year::find($year_id);
+            $year->name = $request->name;
+            $year->status = $request->status;
+            $year->start_date = $request->start_date;
+            $year->end_date = $request->end_date;
+            $query = $year->save();
+
+            if (!$query) {
+                return response()->json(['code' => 0, 'msg' => 'Terjadi kesalahan']);
+            } else {
+                return response()->json(['code' => 1, 'msg' => 'Tahun Ajaran berhasil diperbarui']);
             }
         }
     }
