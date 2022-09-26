@@ -12,6 +12,7 @@ use App\Question;
 use App\Submission;
 use App\Task;
 use App\TaskQuestion;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,7 @@ class StudentController extends Controller
             ->join('questions', 'submissions.question_id', 'questions.id')
             ->join('exercise_questions', 'questions.id', 'exercise_questions.question_id')
             ->where('exercise_questions.exercise_id', '=', $request->id)
-            ->select('submissions.id','questions.title', 'submissions.status', 'submissions.solution')
+            ->select('submissions.id','questions.title', 'submissions.status', 'submissions.solution',)
             ->get();
         $passed = DB::table('submissions')
         ->where('student_id', '=', Auth::user()->id)
@@ -51,12 +52,13 @@ class StudentController extends Controller
         $question = ExerciseQuestion::where('exercise_id','=', $request->id)->get()->count();
         $score = floor($passed / $question * 100);
         // dd($score, $passed, $question);
-        return view('student.result.exercise-result', compact('submissons','score'));
+        return view('student.result.exercise-result', compact('submissons','score',));
     }
 
     public function exerciseResultDetail(Request $request){
         $detail = Submission::find($request->id);
-        return response()->json(['detail' => $detail]);
+        $dateDiff = Carbon::parse($detail->updated_at)->diffForHumans();
+        return response()->json(['detail' => $detail, 'dateDiff'=>$dateDiff]);
     }
 
     // Latihan

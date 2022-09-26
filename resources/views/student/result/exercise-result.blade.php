@@ -65,7 +65,7 @@ iCLOP | Riwayat Latihan
                 const solutionModal = $('.solutionModal');
                 // $(solutionModal).find('h5').text(data.details[0].title);
                 // $(solutionModal).find('h6').text(data.details[0].updated_at);
-                // $(solutionModal).find('.dateDiff').text("(" + data.details.dateDiff + ")");
+                $(solutionModal).find('.dateDiff').text("(" + data.dateDiff + ")");
                 $(solutionModal).find('code').text(data.detail.solution);
                 $(solutionModal).modal('show');
             }, 'json');
