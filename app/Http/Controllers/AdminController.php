@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\DDLClass;
+use App\DDLStudent;
+use App\User;
 use App\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -11,7 +15,11 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admin.dashboard');
+        $mahasiswa = User::where('role', '=', 'student')->get()->count();
+        $dosen = User::where('role', '=', 'teacher')->get()->count();
+        $year = Year::where('status', '=', 'aktif')->get();
+        $class = DDLClass::all()->count();
+        return view('admin.dashboard', compact('mahasiswa', 'dosen', 'year', 'class'));
     }
 
     public function year()
@@ -107,5 +115,23 @@ class AdminController extends Controller
                 return response()->json(['code' => 1, 'msg' => 'Tahun Ajaran berhasil diperbarui']);
             }
         }
+    }
+
+    public function class()
+    {
+        $classes = DDLClass::all();
+        return view('admin.class', compact('classes'));
+    }
+
+    public function classDetail(Request $request)
+    {
+        //$students = DDLStudent::where('class_id', '=', $request->id)->get();
+        $students = DB::table('students')
+        ->where('class_id', '=', $request->id)
+        ->join('users', 'students.student_id', 'users.id')
+        ->join('class', 'students.class_id', 'class.id')
+        ->select('users.name', 'class.name as className')
+        ->get();
+        return view('admin.student-class', compact('students'));
     }
 }

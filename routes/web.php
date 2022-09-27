@@ -26,6 +26,9 @@ Route::group(['prefix' => 'a', 'middleware' => ['admin', 'auth', 'pvb']], functi
     Route::post('year-add', [AdminController::class, 'yearAdd'])->name('admin.year.add');
     Route::get('year-detail', [AdminController::class, 'yearDetail'])->name('admin.year.detail');
     Route::post('year-update', [AdminController::class, 'yearUpdate'])->name('admin.year.update');
+
+    Route::get('class', [AdminController::class, 'class'])->name('admin.class');
+    Route::get('class/{id}', [AdminController::class, 'classDetail'])->name('admin.class.detail');
 });
 
 Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], function () {
