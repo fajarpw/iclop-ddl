@@ -127,11 +127,27 @@ class AdminController extends Controller
     {
         //$students = DDLStudent::where('class_id', '=', $request->id)->get();
         $students = DB::table('students')
-        ->where('class_id', '=', $request->id)
-        ->join('users', 'students.student_id', 'users.id')
-        ->join('class', 'students.class_id', 'class.id')
-        ->select('users.name', 'class.name as className')
-        ->get();
+            ->where('class_id', '=', $request->id)
+            ->join('users', 'students.student_id', '=', 'users.id')
+            ->join('class', 'students.class_id', '=', 'class.id')
+            ->select('users.name', 'class.name as className')
+            ->get();
         return view('admin.student-class', compact('students'));
+    }
+
+    public function classStudent(Request $request)
+    {
+        
+        $students = DDLStudent::where('class_id', 1)
+        ->get();   
+        return DataTables::of($students)
+            ->addColumn('student_name', function (DDLStudent $ddlStudent) {
+                return $ddlStudent->user->name;
+            })
+            ->addColumn('class_name', function (DDLStudent $ddlClass) {
+                return $ddlClass->class->name;
+            })
+            ->rawColumns(['student_name', 'class_name'])
+            ->make(true);
     }
 }

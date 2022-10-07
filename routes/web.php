@@ -29,6 +29,7 @@ Route::group(['prefix' => 'a', 'middleware' => ['admin', 'auth', 'pvb']], functi
 
     Route::get('class', [AdminController::class, 'class'])->name('admin.class');
     Route::get('class/{id}', [AdminController::class, 'classDetail'])->name('admin.class.detail');
+    Route::get('class-student', [AdminController::class, 'classStudent'])->name('admin.class.student');
 });
 
 Route::group(['prefix' => 's', 'middleware' => ['teacher', 'auth', 'pvb']], function () {

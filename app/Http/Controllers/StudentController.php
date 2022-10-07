@@ -126,7 +126,6 @@ class StudentController extends Controller
             ->select('questions.id', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'task_questions.no', 'task_questions.task_id')
             ->get();
         $question_count = count($questions);
-        // dd($question_count);
         return view('student.question', compact('questions', 'question_count'));
     }
 

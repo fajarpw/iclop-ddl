@@ -16,21 +16,39 @@ iCLOP | Kelas
 @endsection
 @section('content')
 <div class="row">
-    @forelse ($students as $student)
-    <div class="col-lg-4">
-        <div class="small-box bg-dark">
-            <div class="inner">
-                <h3>{{$student -> {'name'} }}</h3>
-                <h3>{{$student -> {'className'} }}</h3>
-            </div>
-            <div class="icon">
-                <i class="ion ion-bag"></i>
-            </div>
-            <a href="{{route('admin.class.detail', ["id"=>$student -> {'name'}])}}" class="small-box-footer bg-blue">Lihat Detail <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-    </div>
-    @empty
+    <div class="col">
+        <table class="table" id="student_table">
+            <thead>
+                <tr class="text-center">
+                    <th>Nama</th>
+                    <th>Kelas</th>
+                </tr>
+            </thead>
+            <tbody>
 
-    @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $('#student_table').DataTable({
+            processing: true,
+            info: true,
+            serverSide: true,   
+            ajax: "{{ route('admin.class.student') }}",
+            columns: [
+                {
+                    data: "student_name",
+                    name: "student.name"
+                },
+                {
+                    data: "class_name",
+                    name: "class.name"
+                },
+            ]
+        });
+</script>
 @endsection
