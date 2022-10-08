@@ -22,7 +22,7 @@
             <div class="icon">
                 <i class="ion ion-bag"></i>
             </div>
-            <a href="{{route('teacher.student.exercises.result', ['id' => $exercise ->{'id'} ])}}"
+            <a href="{{route('teacher.exercises.result.detail', ['id' => $exercise ->{'id'} ])}}"
                 class="small-box-footer bg-blue">Lihat <i class="fas fa-info-circle"></i></a>
         </div>
     </div>

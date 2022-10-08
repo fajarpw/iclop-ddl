@@ -79,19 +79,11 @@ class StudentController extends Controller
             ->where('submissions.status', '=', 'Passed')
             ->get();
         $completions = floor(count($completions) / 15 * 100);
-        // dd($completions);
         return view('student.exercise.exercise-question', compact('exercise_questions', 'completions'));
     }
 
     public function exercise_question_detail(Request $request)
     {
-
-        // $questions = DB::table('questions')
-        //     ->where('questions.id', '=', $request->exercise_questions)
-        //     ->join('exercise_questions', 'questions.id','=', 'exercise_questions.question_id')
-        //     ->where('exercise_questions.exercise_id', '=', $request->exercise_id)
-        //     ->select('exercise_questions.no', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'exercise_questions.no', 'exercise_questions.exercise_id')
-        //     ->get();
         $questions = DB::table('exercise_questions')
             ->where('exercise_questions.exercise_id', '=', $request->exercise_id)
             ->where('exercise_questions.no', '=', $request->question_no)
@@ -99,7 +91,6 @@ class StudentController extends Controller
             ->select('exercise_questions.no', 'questions.id', 'questions.title', 'questions.topic', 'questions.dbname', 'questions.description', 'questions.required_table', 'questions.test_code', 'questions.guide', 'exercise_questions.no', 'exercise_questions.exercise_id')
             ->get();
         $question_count = ExerciseQuestion::where('exercise_id', '=', $request->exercise_id)->get()->count();
-        // dd($question_count);
         return view('student.question', compact('questions', 'question_count',));
     }
 

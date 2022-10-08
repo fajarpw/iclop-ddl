@@ -6,6 +6,7 @@ use App\Exercise;
 use App\Question;
 use App\Year;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -218,13 +219,31 @@ class TeacherController extends Controller
         }
     }
 
-    public function exercisesResult(){
+    public function exercisesResult()
+    {
         $exercises = Exercise::all();
         return view('teacher.exercise-result', compact('exercises'));
     }
 
-    public function studentExercisesResult(Request $request){
+    public function exercisesResultDetail(Request $request)
+    {
         $exercises = Exercise::find($request->id);
         return view('teacher.student-exercise-result', compact('exercises'));
+    }
+
+    public function studentExerciseResult(Request $request)
+    {
+        $exercises = Exercise::all();
+        return view('teacher.exercise-result', compact('exercises'));
+    }
+
+    public function exercisesResultStudent(Request $request)
+    {
+        $submissons = DB::table('submissions')
+            ->join('users', 'submissions.student_id', 'user.id')
+            ->join('exercise_questions', 'questions.id', 'exercise_questions.question_id')
+            ->where('exercise_questions.exercise_id', '=', $request->id)
+            ->select('submissions.id', 'questions.title', 'submissions.status', 'submissions.solution',)
+            ->get();
     }
 }
