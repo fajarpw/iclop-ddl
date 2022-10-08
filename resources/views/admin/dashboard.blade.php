@@ -2,6 +2,7 @@
 @section('title')
 iCLOP | Beranda
 @endsection
+
 @section('content-header')
 <h4 class="font-weight-bold">
     @php
@@ -10,10 +11,12 @@ iCLOP | Beranda
     @endphp
 </h4>
 <p>
-    <marquee behavior="" direction=""><span class="font-weight-bold">Selamat Datang di Aplikasi Pembelajaran DDL!</span>
+    <marquee behavior="" direction="
+    ........;....."><span class="font-weight-bold">Selamat Datang di Aplikasi Pembelajaran DDL!</span>
     </marquee>
 </p>
 @endsection
+
 @section('content')
 <div class="row">
     <div class="col">
@@ -32,21 +35,20 @@ iCLOP | Beranda
     <div class="col-lg-3 col-6">
         <div class="small-box bg-gray">
             <div class="inner">
-                <h3>{{ $mahasiswa }}</h3>
+                <h4>{{ $mahasiswa }}</h4>
                 <p>Mahasiswa</p>
             </div>
             <div class="icon">
                 <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{route('admin.student')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
 
     <div class="col-lg-3 col-6">
-
         <div class="small-box bg-gray">
             <div class="inner">
-                <h3>{{ $class }}<sup style="font-size: 20px"></sup></h3>
+                <h4>{{ $class }}<sup style="font-size: 20px"></sup></h4>
                 <p>Kelas</p>
             </div>
             <div class="icon">
@@ -57,24 +59,22 @@ iCLOP | Beranda
     </div>
 
     <div class="col-lg-3 col-6">
-
         <div class="small-box bg-gray">
             <div class="inner">
-                <h3>{{ $dosen }}</h3>
+                <h4>{{ $dosen }}</h4>
                 <p>Dosen</p>
             </div>
             <div class="icon">
                 <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{route('admin.teacher')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
 
     <div class="col-lg-3 col-6">
-
         <div class="small-box bg-gray">
             <div class="inner">
-                <h3>{{ $year[0] -> {'name'} }}</h3>
+                <h4>{{ $year[0] -> {'name'} }}</h4>
                 <p>Tahun Ajaran</p>
             </div>
             <div class="icon">

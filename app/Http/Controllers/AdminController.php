@@ -137,9 +137,9 @@ class AdminController extends Controller
 
     public function classStudent(Request $request)
     {
-        
+
         $students = DDLStudent::where('class_id', 1)
-        ->get();   
+            ->get();
         return DataTables::of($students)
             ->addColumn('student_name', function (DDLStudent $ddlStudent) {
                 return $ddlStudent->user->name;
@@ -149,5 +149,33 @@ class AdminController extends Controller
             })
             ->rawColumns(['student_name', 'class_name'])
             ->make(true);
+    }
+
+    public function student(){
+        return view('admin.student');
+    }
+
+    public function getStudent()
+    {
+        $students = DDLStudent::all();
+        return DataTables::of($students)
+            ->addColumn('student_name', function (DDLStudent $ddlStudent) {
+                return $ddlStudent->user->name;
+            })
+            ->addColumn('class_name', function (DDLStudent $ddlClass) {
+                return $ddlClass->class->name;
+            })
+            ->rawColumns(['student_name', 'class_name'])
+            ->make(true);
+    }
+
+    public function teacher(){
+        return view('admin.teacher');
+    }
+
+    public function getTeacher()
+    {
+        $teachers = User::where('role', 'teacher');
+        return DataTables::of($teachers)->make(true);
     }
 }

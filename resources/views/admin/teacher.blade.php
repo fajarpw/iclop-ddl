@@ -11,11 +11,10 @@ iCLOP | Beranda
 @section('content')
 <div class="row mt-3">
     <div class="col">
-        <table class="table" id="student_table">
+        <table class="table" id="teacher_table">
             <thead>
-                <tr class="text-center">
+                <tr>
                     <th>Nama</th>
-                    <th>Kelas</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,19 +27,15 @@ iCLOP | Beranda
 @endsection
 @section('script')
 <script>
-    $('#student_table').DataTable({
+    $('#teacher_table').DataTable({
             processing: true,
             info: true,
             serverSide: true,   
-            ajax: "{{ route('admin.get.student') }}",
+            ajax: "{{ route('admin.get.teacher') }}",
             columns: [
                 {
-                    data: "student_name",
-                    name: "student.name"
-                },
-                {
-                    data: "class_name",
-                    name: "class.name"
+                    data: "name",
+                    name: "name"
                 },
             ]
         });
